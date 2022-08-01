@@ -13,14 +13,18 @@ function fetchMovie(){
 }
 
 $('#content').on('click','img',function(){
+
+
   let mydiv=$(this).closest('div')
+  mydiv.find('ul').empty()
   let id=$(this).closest('div').data().id
   $.get(`http://www.omdbapi.com/?apikey=b0d39b78&i=${id}`,
   (
   function(Rating){
  
  Rating.Ratings.forEach(rating => {
-  mydiv.append(<li> ${rating.Value}</li>)
+  
+  mydiv.find('ul').append(`<li> ${rating.Value}</li>`)
  });
 
   })
