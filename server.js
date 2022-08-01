@@ -34,19 +34,19 @@ app.get(`/movies/:title`,(req,res)=>{
 axios.get(`http://www.omdbapi.com/?apikey=b0d39b78&s=${req.params.title}`)
 .then(function (response) {
     // handle success
-   movies = response.data.s
- /*
+   movies = response.data.search
+ 
   movies= movies.map((movie)=>{
-    return 
-        title: movie.title,
-        thumbnail: recipe.thumbnail,
-        href: recipe.href,
-        ingredients: recipe.ingredients
+    return {         
+        Title: movie.Title,
+        Poster: movie.Poster,
+        Year  : movie.Year,
+        Ratings: movie.Ratings
     } 
 
   })
-  res.send(recipes)*/
-  console.log()
+  res.send(movies)
+  console.log(movies)
   })
   .catch(function (error) {
     // handle error
