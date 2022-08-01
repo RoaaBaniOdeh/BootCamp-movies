@@ -6,7 +6,7 @@ function fetchMovie(){
     //غيت بترسل $get 
     $.get(`/movies/${input}`,(res)=>{
       //console.log(res)
-      renderer. movieRenderer(res)
+      renderer.movieRenderer(res)
     })
 }
 

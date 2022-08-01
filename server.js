@@ -25,6 +25,7 @@ app.get('/sanity',function(req,res){
     res.send("ok")
 })
 
+
 let movies = []
 //app.get بتستقبل من اليوزر ريكوست
 app.get(`/movies/:title`,(req,res)=>{
@@ -34,29 +35,44 @@ app.get(`/movies/:title`,(req,res)=>{
 axios.get(`http://www.omdbapi.com/?apikey=b0d39b78&s=${req.params.title}`)
 .then(function (response) {
     // handle success
-   movies = response.data.search
+   movies = response.data.Search
+   movies.map((movie)=>{
+
+   return {
+      Title: movie.Title,
+      Poster: movie.Poster,
+      Year: movie.Year,
+          }
+
+
+
+  })
+
+  getRatings(movies,res)
+  //console.log(movies)
  
-  movies= movies.map((movie)=>{
-    return {         
-        Title: movie.Title,
-        Poster: movie.Poster,
-        Year  : movie.Year,
-        Ratings: movie.Ratings
-    } 
-
   })
-  res.send(movies)
-  console.log(movies)
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .then(function () {
-    // always executed
-  });
-
+  
   
 
 })
 
+function getRatings(movies,response)
+{
+  let filterd =[]
+ movies.forEach(movie => {
+    axios.get(`http://www.omdbapi.com/?apikey=b0d39b78&t=${movie.Title}`).then
+  (
+  function(Rating){
+  movie['Rating'] = Rating.data.Ratings
+ filterd.push(movie)
+  
+  })
+
+  })
+  setTimeout(()=>response.send(filterd) , 500);
+    
+
+  
+  
+}
