@@ -6,14 +6,13 @@ const axioss = require('axios')
 const { default: axios } = require('axios')
 
 
-
 //app.use to upload the files to clients side 
 app.use(express.static(path.join(__dirname,'dist')))
 app.use(express.static(path.join(__dirname,'node_modules')))
 
 
 //بنشغل السيرفر
-const port = 8081
+const port = 8082
 app.listen(port,function(){
     console.log("Server is running on port"+port)
 
@@ -24,7 +23,6 @@ app.get('/sanity',function(req,res){
    
     res.send("ok")
 })
-
 
 let movies = []
 //app.get بتستقبل من اليوزر ريكوست
@@ -39,6 +37,7 @@ axios.get(`http://www.omdbapi.com/?apikey=b0d39b78&s=${req.params.title}`)
    movies.map((movie)=>{
 
    return {
+      imdbID:movie.imdbID,
       Title: movie.Title,
       Poster: movie.Poster,
       Year: movie.Year,
@@ -48,31 +47,9 @@ axios.get(`http://www.omdbapi.com/?apikey=b0d39b78&s=${req.params.title}`)
 
   })
 
-  getRatings(movies,res)
-  //console.log(movies)
- 
+ res.send(movies)
   })
   
   
 
 })
-
-function getRatings(movies,response)
-{
-  let filterd =[]
- movies.forEach(movie => {
-    axios.get(`http://www.omdbapi.com/?apikey=b0d39b78&t=${movie.Title}`).then
-  (
-  function(Rating){
-  movie['Rating'] = Rating.data.Ratings
- filterd.push(movie)
-  
-  })
-
-  })
-  setTimeout(()=>response.send(filterd) , 500);
-    
-
-  
-  
-}

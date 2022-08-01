@@ -19,7 +19,7 @@
    <script   id="movie-template" type="text/x-handlebars-template">
     
     {{#each movies}}
-       <div  class="movie-info">
+       <div  class="movie-info" data-id="{{ imdbID}}">
            <div>{{Title}}</div>
        <img src='{{Poster}}'   />
        <div>{{Year}}</div>
